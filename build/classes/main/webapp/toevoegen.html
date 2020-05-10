@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="V2C Team 3 TOSAD">
+
+    <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <!--link href="css/main.css" rel="stylesheet">-->
+     <link href="css/nav.css" rel="stylesheet">
+    <title>Vertaalprogramma | Grammatica Toevoegen</title>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Vertaalprogramma</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="structuur.html">STRUCTUUR</a></li>
+        <li><a href="engels.html">ENGELS</a></li>
+         <li><a href="toevoegen.html">GRAMMATICA TOEVOEGEN</a></li>
+      </ul> 
+    </div>
+  </div>
+</nav>
+
+<section id="grammatica_toevoegen">
+
+    <div class="container" id="selecteer_grammatica">
+
+        <select class="form-control" id="grammatica">
+            <option value="Lidwoord" id="lidwoord_value">Lidwoord</option>
+            <option value="Werkwoord" id="werkwoord_value">Werkwoord</option>
+            <option value="Zelfstandignaamwoord" id="zelfstandignaamwoord_value">Zelfstandignaamwoord</option>
+        </select>
+        <button type="button" class="btn btn-success" id="select">Select</button>
+
+    </div>
+
+
+   <h6 id="melding"></h6>
+    <div class="container" id="types">
+    
+        <form id="lidwoord_form">
+            <div class="form-group">
+                <label for="tabel_Lidwoord">Lidwoord</label>
+                    <input class="form-control" id="lidwoord" name="lidwoord" placeholder="lidwoord: ">
+            </div>
+            <button type="button" class="btn btn-success" id="save_lidwoord">Opslaan</button>
+        </form>
+
+        <form id="werkwoord_form">
+            <div class="form-group">
+             <label for="werkwoord">Werkwoord:</label>
+                     <input class="form-control" id="werkwoord" name="werkwoord" placeholder="werkwoord: ">
+                </div>
+
+
+            <button type="button" class="btn btn-success" id="save_werkwoord">Opslaan</button>
+
+        </form>
+        <form id="zelfstandignaamwoord_form">
+            <div class="form-group">
+                    <label for="zelfstandignaamwoord">Zelfstandignaamwoord:</label>
+                    <input class="form-control" id="zelfstandignaamwoord" name="zelfstandignaamwoord" placeholder="Zelfstandignaamwoord: ">
+                </div>
+           
+            <button type="button" class="btn btn-success" id="save_zelfstandignaamwoord">Opslaan</button>
+
+
+        </form>
+      
+    </div>
+</section>
+
+<script>
+
+
+
+
+    var lidwoord_form = document.getElementById('lidwoord_form');
+    var werkwoord_form = document.getElementById('werkwoord_form');
+    var zelfstandignaamwoord_form = document.getElementById('zelfstandignaamwoord_form');
+    var select_btn = document.getElementById('select');
+    lidwoord_form.style.display="none";
+    werkwoord_form.style.display="none";
+    zelfstandignaamwoord_form.style.display="none";
+    
+ 
+    
+    
+
+    function selecteer() {
+    	var selector = document.getElementById('grammatica');
+        var value = selector[selector.selectedIndex].value;
+        console.log(value);
+
+        if (value=="Lidwoord") {
+            lidwoord_form.style.display="";
+            werkwoord_form.style.display="none";
+            zelfstandignaamwoord_form.style.display="none";
+
+        }
+        else if(value=="Werkwoord") {
+            werkwoord_form.style.display="";
+            zelfstandignaamwoord_form.style.display="none";
+            lidwoord_form.style.display="none";
+
+        }
+        else if(value=="Zelfstandignaamwoord") {
+            zelfstandignaamwoord_form.style.display="";
+            werkwoord_form.style.display="none";
+            lidwoord_form.style.display="none";
+
+        }
+      
+    }
+    select_btn.addEventListener('click',selecteer);
+    var melding = document.getElementById("melding");
+    var voegToeLidwoord = document.querySelector("#save_lidwoord");
+    voegToeLidwoord.addEventListener("click",function(){
+        var formData = new FormData(document.querySelector("#lidwoord_form"));
+        var encData = new URLSearchParams(formData.entries());
+        fetch("http://localhost:8088/firstapp/restservices/representatie/lidwoordToevoegen/",{method:'POST', body: encData})
+        //fetch("restservices/rule",{method:'POST', body: encData})
+            .then(function(myJson) {
+                if (myJson.ok){
+                	 melding.innerHTML="lidwoord "+encData+" is opgeslagen";              
+                    console.log("Lidwoord toegevoegd!");
+                    console.log(myJson);
+                   
+                    }
+                else if (myJson.status == 404){
+                	 melding.innerHTML = "lidwoord is niet opgeslagen: bestaat al";
+                    console.log("Lidwoord niet toegevoegd!");
+                }
+
+            })
+
+    });
+    
+    var voegToeWerkwoord = document.querySelector("#save_werkwoord");
+    voegToeWerkwoord.addEventListener("click",function(){
+        var formData = new FormData(document.querySelector("#werkwoord_form"));
+        var encData = new URLSearchParams(formData.entries());
+        fetch("http://localhost:8088/firstapp/restservices/representatie/werkwoordToevoegen/",{method:'POST', body: encData})
+            .then(function(myJson) {
+                if (myJson.ok){
+                	 melding.innerHTML="werkwoord " +encData+" is opgeslagen";   
+                    console.log("werkwoord toegevoegd!");
+                    console.log(myJson);}
+                       else if (myJson.status == 404){
+                    	   melding.innerHTML="werkwoord is niet opgeslagen(bestaat al)";
+                    console.log("werkwoord niet toegevoegd!");
+                       }
+               
+
+            })
+
+    });
+    
+    var voegToeZelfstandignaamwoord = document.querySelector("#save_zelfstandignaamwoord");
+    voegToeZelfstandignaamwoord.addEventListener("click",function(){
+        var formData = new FormData(document.querySelector("#zelfstandignaamwoord_form"));
+        var encData = new URLSearchParams(formData.entries());
+        fetch("http://localhost:8088/firstapp/restservices/representatie/zelfstandignaamwoordToevoegen/",{method:'POST', body: encData})     
+            .then(function(myJson) {
+                if (myJson.status){
+                	 melding.innerHTML="zelfstandignaamwoord:"+encData+" is opgeslagen";
+                    console.log("zelfstandignaamwoord toegevoegd!");
+                    console.log(myJson); }
+                else if (myJson.status == 404){
+                	 melding.innerHTML="zelfstandignaamwoord is niet opgeslagen(bestaat al)";
+                    console.log("zelfstandignaamwoord niet toegevoegd!");
+                }
+
+            })
+
+    });
+    
+    
+    
+    </script>
+    </body>
+    </html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   
+ 
+    <title>Structuur</title>
+    <meta charset="utf-8">
+    <!-- Latest compiled and minified CSS -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+   
+
+    <link rel="stylesheet" href="css/nav.css">
+    <title>Vertaalprogramma | Structuur</title>
+
+   
+ </head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Vertaalprogramma</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="structuur.html">STRUCTUUR</a></li>
+        <li><a href="engels.html">ENGELS</a></li>
+         <li><a href="toevoegen.html">GRAMMATICA TOEVOEGEN</a></li>
+      </ul> 
+    </div>
+  </div>
+</nav>
+    <div class= "container" id="structuur_test">
+        <h2 id="eenvoudigezin">Eenvoudige zin</h2> 
+        <h3 id="naamwoordelijkdeel">Naamwoordelijkdeel</h3> 
+        <h4 id="lidwoord">lidwoord:</h4> 
+        <h4 id="zelfstandignaamwoord">Zelfstandignaamwoord:</h4> 
+        <h3 id="werkwoordelijkdeel">werkwoordelijkdeel: </h3> 
+        <h3 id="naamwoordelijk_deel">Naamwoordelijk deel</h3> 
+        <h4 id="lidwoord1">lidwoord:</h4> 
+        <h4 id="zelfstandignaamwoord1">Zelfstandignaamwoord:</h4> 
+        
+      
+        
+        
+        
+    </div>  
+   <h1 id="foutmelding1"></h1> 
+   
+   <script>
+   var structuur = document.getElementById('structuur_test')
+   var lidwoord = document.getElementById('lidwoord');
+   var zelfstandignaamwoord = document.getElementById('zelfstandignaamwoord');
+   var werkwoordelijkdeel = document.getElementById('werkwoordelijkdeel');
+   var lidwoord1 = document.getElementById('lidwoord1');
+   var zelfstandignaamwoord1 = document.getElementById('zelfstandignaamwoord1');
+   var foutmelding1 = document.getElementById('foutmelding1');
+   var input_value = window.sessionStorage.getItem("value");
+   foutmelding1.innerHTML="";
+   structuur.style.display="none";
+
+
+  
+   
+   
+   function loadStructuur(){ 
+	  
+	   
+	   console.log(input_value);
+		 var fetchoptions = {
+					method: 'GET'}
+
+			   fetch('http://localhost:8088/firstapp/restservices/representatie/structuur/'+input_value, fetchoptions)
+			     .then(response => response.json())
+			     .then(function(myJson) {
+			    
+			    	        structuur.style.display="";
+			    	        foutmelding1.style.color="white";
+			    	        
+			            	console.log(myJson.zelfstandignaamwoord1);
+
+			            	
+			            	lidwoord.innerHTML += myJson.lidwoord;
+			            	zelfstandignaamwoord.innerHTML +=myJson.zelfstandignaamwoord;
+			            	werkwoordelijkdeel.innerHTML +=myJson.werkwoord;
+			            	lidwoord1.innerHTML += myJson.lidwoord1;
+			            	zelfstandignaamwoord1.innerHTML +=myJson.zelfstandignaamwoord1;
+			            	foutmelding.innerHTML +=myJson.foutmelding;
+			            	
+			            	
+			     })
+		 
+		 .catch(err=>{
+			 console.log("ERROR")
+			
+			
+			 
+			 foutmelding1.innerHTML = "Grammatica van de ingevoerde zin klopt niet!"; 
+			  })
+	 }
+   
+   loadStructuur();
+ 
+   //
+   </script>
+   
+</body>
+</html>

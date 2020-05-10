@@ -1,0 +1,55 @@
+ .navbar {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-size: 12px;
+    letter-spacing: 5px;
+  }
+  .navbar-nav  li a:hover {
+    color: #1abc9c !important; 
+  } 
+  #grammatica_toevoegen {
+  
+  margin-top:50px;
+  }
+  
+  #select{
+    margin-top:30px;
+    margin-bottom:30px;
+  }
+  
+  #testing {
+  width:400px;
+    margin:200px auto;
+  }
+  
+  #structuur_test{
+    width: 300px;
+    margin:100px auto;
+  
+    
+  }
+  
+ #foutmelding1{
+
+  width:400px;
+  margin:100px auto;
+
+  
+
+  }
+  
+  
+  #melding{
+  width:300px;
+  float:right;
+  }
+  
+  #foutmelding{
+  
+  margin:100px auto;
+  
+  }
+  
